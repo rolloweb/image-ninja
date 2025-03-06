@@ -63,10 +63,11 @@
             display: block;
             margin: 0 auto;
             font-family: 'Poppins', sans-serif;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
         }
         button:hover {
             background-color: #c96c5c;
+            transform: translateY(-2px);
         }
         .result-section {
             margin-top: 30px;
@@ -159,6 +160,9 @@
             display: flex;
             align-items: center;
             margin-top: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
         }
         
         .watermark-toggle input {
@@ -169,16 +173,40 @@
         .premium-banner {
             background-color: #df7c6c;
             color: white;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 15px 20px;
+            border-radius: 8px;
             margin: 15px 0;
-            text-align: center;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .premium-banner ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .premium-banner li {
+            margin: 5px 0;
         }
         
         .buy-coffee-btn {
             background-color: #699fcd;
             display: inline-block;
             margin-left: 10px;
+            transition: all 0.2s ease;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-coffee-btn:hover {
+            background-color: #5280a7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         /* Tabs for tools */
@@ -195,11 +223,17 @@
             color: #333;
             border-radius: 4px 4px 0 0;
             margin-right: 5px;
+            transition: all 0.2s ease;
         }
         
         .tab.active {
             background-color: #df7c6c;
             color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #ffcdd2;
+            transform: translateY(-2px);
         }
         
         .tab-content {
@@ -208,6 +242,7 @@
         
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease-out;
         }
         
         /* Text Formatter Tool */
@@ -246,15 +281,22 @@
             font-size: 14px;
             margin: 0;
             display: inline-block;
+            transition: all 0.2s ease;
         }
         
         .format-btn:hover {
             background-color: #5280a7;
+            transform: translateY(-2px);
         }
         
         .character-count {
             margin-top: 10px;
             font-size: 14px;
+            color: #333;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
         }
         
         .locked-feature {
@@ -268,19 +310,30 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.85);
             color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
             z-index: 10;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Image Ninja</h1>
-        
+        <div class="powered-by" style="text-align: center; margin-bottom: 20px;">
+            <img src="https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w" alt="Funk3000 Logo" style="height: 40px; margin-right: 10px;">
+            <span style="font-weight: 600; color: #333; vertical-align: middle;">Powered by Funk3000</span>
+        </div>
+
         <div class="tools-tabs">
             <div class="tab active" data-tab="carousel-slicer">Carousel Slicer</div>
             <div class="tab" data-tab="text-formatter">LinkedIn Text Formatter</div>
@@ -298,12 +351,18 @@
                 
                 <div class="watermark-toggle">
                     <input type="checkbox" id="removeWatermark" disabled>
-                    <label for="removeWatermark">Remove "Split by funk3000" watermark</label>
-                    <button id="buyCoffeeBtn" class="buy-coffee-btn">Buy me a coffee (£3)</button>
+                    <label for="removeWatermark">Remove watermark</label>
+                    <button id="buyCoffeeBtn" class="buy-coffee-btn">🔓 Unlock Premium (£3)</button>
                 </div>
                 
                 <div class="premium-banner">
-                    Upgrade to premium for £3 to remove watermarks and unlock the LinkedIn Text Formatter tool!
+                    <strong>✨ Unlock Premium Features:</strong>
+                    <ul>
+                        <li>Remove "Split by funk3000" watermark</li>
+                        <li>Access the LinkedIn Text Formatter tool</li>
+                        <li>Support independent development</li>
+                    </ul>
+                    <button id="premiumBannerBtn" class="buy-coffee-btn">🔓 Unlock Premium for £3</button>
                 </div>
             </div>
             
@@ -345,7 +404,7 @@
             <div class="locked-overlay">
                 <h3>Premium Feature</h3>
                 <p>Buy me a coffee (£3) to unlock this tool</p>
-                <button id="unlockTextFormatter" class="buy-coffee-btn">Buy me a coffee</button>
+                <button id="unlockTextFormatter" class="buy-coffee-btn">🔓 Unlock Premium</button>
             </div>
             
             <div class="info-text">
@@ -372,9 +431,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </div>     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         // Get DOM elements
@@ -390,23 +447,25 @@
         const removeWatermarkCheckbox = document.getElementById('removeWatermark');
         const buyCoffeeBtn = document.getElementById('buyCoffeeBtn');
         const unlockTextFormatterBtn = document.getElementById('unlockTextFormatter');
-        
+        const premiumBannerBtn = document.getElementById('premiumBannerBtn');
+
+        // Global variables
+        let originalImage = null;
+        let canvases = [];
+
         // Tab functionality
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // Only allow tab switch if not locked or if premium
                 const targetTab = tab.getAttribute('data-tab');
                 const targetContent = document.getElementById(targetTab);
                 
                 if (targetContent.classList.contains('locked-feature') && !isPremiumUser()) {
-                    // Don't switch to locked tabs for non-premium users
                     return;
                 }
                 
-                // Switch tabs
                 tabs.forEach(t => t.classList.remove('active'));
                 tabContents.forEach(c => c.classList.remove('active'));
                 
@@ -414,17 +473,15 @@
                 targetContent.classList.add('active');
             });
         });
-        
+
         // Premium functionality
         function isPremiumUser() {
             return localStorage.getItem('imageninja_premium') === 'true';
         }
         
         function unlockPremiumFeatures() {
-            // Enable watermark removal
             removeWatermarkCheckbox.disabled = false;
             
-            // Unlock text formatter
             const textFormatter = document.getElementById('text-formatter');
             textFormatter.classList.remove('locked-feature');
             const lockedOverlay = textFormatter.querySelector('.locked-overlay');
@@ -432,10 +489,8 @@
                 lockedOverlay.remove();
             }
             
-            // Hide premium banner
             document.querySelector('.premium-banner').style.display = 'none';
             
-            // Save premium status
             localStorage.setItem('imageninja_premium', 'true');
         }
         
@@ -444,25 +499,35 @@
             unlockPremiumFeatures();
         }
         
-        // Handle buy coffee button clicks
-        buyCoffeeBtn.addEventListener('click', handlePayment);
-        unlockTextFormatterBtn.addEventListener('click', handlePayment);
+        // Handle payment buttons
+        [buyCoffeeBtn, unlockTextFormatterBtn, premiumBannerBtn].forEach(btn => {
+            if (btn) btn.addEventListener('click', handlePayment);
+        });
         
         function handlePayment() {
-            // In a real app, you would integrate with a payment processor here
-            const confirmPurchase = confirm("Would you like to support the developer by buying a coffee for £3?\n\nThis will unlock premium features:\n- Watermark removal\n- LinkedIn Text Formatter tool");
+            const features = [
+                "✓ Remove 'Split by funk3000' watermark",
+                "✓ Access LinkedIn Text Formatter tool",
+                "✓ Support independent development",
+                "✓ One-time payment, lifetime access"
+            ];
             
-            if (confirmPurchase) {
-                // Simulate successful payment
+            const confirmMessage = `🔓 Unlock Premium Features for £3\n\n${features.join('\n')}\n\nWould you like to proceed with the purchase?`;
+            
+            if (confirm(confirmMessage)) {
                 unlockPremiumFeatures();
-                alert("Thank you for your support! Premium features are now unlocked.");
+                
+                const successMessage = "🎉 Thank you for your support!\n\n" +
+                    "Premium features are now unlocked:\n" +
+                    "• Watermark removal is now available\n" +
+                    "• LinkedIn Text Formatter tool is unlocked\n\n" +
+                    "Refresh the page to see all changes.";
+                
+                alert(successMessage);
+                location.reload();
             }
         }
-        
-        // Global variables
-        let originalImage = null;
-        let canvases = [];
-        
+
         // Event listeners
         imageInput.addEventListener('change', handleImageUpload);
         processButton.addEventListener('click', processImage);
@@ -474,12 +539,10 @@
             const file = e.target.files[0];
             if (!file) return;
             
-            // Reset UI
             hideError();
             resultSection.classList.add('hidden');
             
-            // Check file size
-            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+            if (file.size > 10 * 1024 * 1024) {
                 showError("File is too large. Please upload an image smaller than 10MB.");
                 return;
             }
@@ -506,48 +569,36 @@
                 return;
             }
             
-            // Get options
             const slideCount = parseInt(slideCountSelect.value);
             const gapWidth = parseInt(gapWidthInput.value);
             const shouldAddWatermark = !removeWatermarkCheckbox.checked || !isPremiumUser();
             
-            // Calculate dimensions
             const totalWidth = originalImage.width;
             const slideWidth = Math.floor(totalWidth / slideCount);
             const height = originalImage.height;
             
-            // Clear previous results
             resultContainer.innerHTML = '';
             canvases = [];
             
-            // Create individual slide canvases
-            let currentX = 0;
             for (let i = 0; i < slideCount; i++) {
-                // Create canvas for this slide
                 const canvas = document.createElement('canvas');
                 canvas.width = slideWidth;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 
-                // Calculate source position (accounting for gaps)
                 const sourceX = i * slideWidth + (i > 0 ? i * gapWidth : 0);
                 
-                // Draw portion of original image
                 ctx.drawImage(
                     originalImage,
-                    sourceX, 0, slideWidth, height,  // Source coordinates
-                    0, 0, slideWidth, height         // Destination coordinates
+                    sourceX, 0, slideWidth, height,
+                    0, 0, slideWidth, height
                 );
                 
-                // Add watermark if not premium or watermark removal not checked
                 if (shouldAddWatermark) {
                     addWatermark(ctx, slideWidth, height);
                 }
                 
-                // Store canvas
                 canvases.push(canvas);
-                
-                // Add to result container
                 resultContainer.appendChild(canvas);
             }
             
@@ -556,15 +607,26 @@
         
         // Add watermark to canvas
         function addWatermark(ctx, width, height) {
-            // Semi-transparent watermark
             ctx.save();
-            ctx.font = "12px Poppins";
-            ctx.fillStyle = "rgba(0, 0, 0, 0.3)"; // Very subtle watermark
             
-            // Position at bottom right
+            // Add semi-transparent background for better visibility
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
             const text = "Split by funk3000";
+            ctx.font = "bold 16px Poppins";
             const textWidth = ctx.measureText(text).width;
-            ctx.fillText(text, width - textWidth - 10, height - 10);
+            const padding = 10;
+            
+            // Draw background rectangle
+            ctx.fillRect(
+                width - textWidth - (padding * 2), 
+                height - 30, 
+                textWidth + (padding * 2), 
+                30
+            );
+            
+            // Draw text
+            ctx.fillStyle = "#df7c6c";
+            ctx.fillText(text, width - textWidth - padding, height - 10);
             ctx.restore();
         }
         
@@ -608,25 +670,19 @@
             }
             
             try {
-                // Using a timeout to stagger downloads to prevent browser blocking
                 canvases.forEach((canvas, index) => {
                     setTimeout(() => {
                         try {
-                            // Create a temporary link element
                             const link = document.createElement('a');
                             link.download = `carousel-slide-${index + 1}.png`;
-                            
-                            // Convert canvas to data URL and set as link href
                             link.href = canvas.toDataURL('image/png');
-                            
-                            // Append to body, click, and remove
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
                         } catch (err) {
                             console.error(`Error downloading image ${index + 1}:`, err);
                         }
-                    }, index * 200); // Stagger downloads by 200ms
+                    }, index * 200);
                 });
             } catch (error) {
                 console.error("Image download error:", error);
@@ -649,20 +705,12 @@
         const charCount = document.getElementById('charCount');
         const formatButtons = document.querySelectorAll('.format-btn');
         
-        // Update character count
         formatterInput.addEventListener('input', () => {
             const count = formatterInput.value.length;
             charCount.textContent = count;
-            
-            // Change color if over limit
-            if (count > 3000) {
-                charCount.style.color = 'red';
-            } else {
-                charCount.style.color = '';
-            }
+            charCount.style.color = count > 3000 ? 'red' : '';
         });
         
-        // Formatting options
         formatButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const format = btn.getAttribute('data-format');
@@ -704,17 +752,13 @@
                         return;
                 }
                 
-                // Replace selected text with formatted text
-                textarea.value = textarea.value.substring(0, startPos) + formattedText + textarea.value.substring(endPos);
+                textarea.value = textarea.value.substring(0, startPos) + 
+                               formattedText + 
+                               textarea.value.substring(endPos);
                 
-                // Update character count
                 textarea.dispatchEvent(new Event('input'));
-                
-                // Set selection to after the inserted text
                 textarea.selectionStart = startPos + formattedText.length;
                 textarea.selectionEnd = startPos + formattedText.length;
-                
-                // Focus back on textarea
                 textarea.focus();
             });
         });
