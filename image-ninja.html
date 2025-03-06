@@ -154,52 +154,222 @@
             background-size: 12px;
             padding-right: 25px;
         }
+        
+        .watermark-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .watermark-toggle input {
+            margin-right: 10px;
+            width: auto;
+        }
+        
+        .premium-banner {
+            background-color: #df7c6c;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .buy-coffee-btn {
+            background-color: #699fcd;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        /* Tabs for tools */
+        .tools-tabs {
+            display: flex;
+            margin-bottom: 0;
+            border-bottom: 2px solid #df7c6c;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ffb8bc;
+            color: #333;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: #df7c6c;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Text Formatter Tool */
+        .text-formatter {
+            background-color: #99d2ed;
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 20px;
+        }
+        
+        .text-formatter textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+        }
+        
+        .format-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .format-btn {
+            background-color: #699fcd;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0;
+            display: inline-block;
+        }
+        
+        .format-btn:hover {
+            background-color: #5280a7;
+        }
+        
+        .character-count {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .locked-feature {
+            opacity: 0.5;
+            position: relative;
+            pointer-events: none;
+        }
+        
+        .locked-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Image Ninja</h1>
         
-        <div class="info-text">
-            <p>Split your image into multiple slides for seamless LinkedIn carousel posts.</p>
+        <div class="tools-tabs">
+            <div class="tab active" data-tab="carousel-slicer">Carousel Slicer</div>
+            <div class="tab" data-tab="text-formatter">LinkedIn Text Formatter</div>
         </div>
         
-        <div class="input-section">
-            <label for="imageInput">Upload Your Image:</label>
-            <input type="file" id="imageInput" accept="image/*">
-            <div id="errorMessage" class="error hidden"></div>
-        </div>
-        
-        <div class="options-section">
-            <div class="option-group">
-                <label for="slideCount">Number of Slides:</label>
-                <select id="slideCount">
-                    <option value="2">2 slides</option>
-                    <option value="3">3 slides</option>
-                    <option value="4" selected>4 slides</option>
-                    <option value="5">5 slides</option>
-                    <option value="6">6 slides</option>
-                    <option value="7">7 slides</option>
-                    <option value="8">8 slides</option>
-                </select>
+        <div id="carousel-slicer" class="tab-content active">
+            <div class="info-text">
+                <p>Split your image into multiple slides for seamless LinkedIn carousel posts.</p>
             </div>
             
-            <div class="option-group">
-                <label for="gapWidth">Gap Width (px):</label>
-                <input type="number" id="gapWidth" value="12" min="0" max="50">
-                <p>LinkedIn's default gap is approximately 12px, but you may adjust based on your needs.</p>
+            <div class="input-section">
+                <label for="imageInput">Upload Your Image:</label>
+                <input type="file" id="imageInput" accept="image/*">
+                <div id="errorMessage" class="error hidden"></div>
+                
+                <div class="watermark-toggle">
+                    <input type="checkbox" id="removeWatermark" disabled>
+                    <label for="removeWatermark">Remove "Split by funk3000" watermark</label>
+                    <button id="buyCoffeeBtn" class="buy-coffee-btn">Buy me a coffee (£3)</button>
+                </div>
+                
+                <div class="premium-banner">
+                    Upgrade to premium for £3 to remove watermarks and unlock the LinkedIn Text Formatter tool!
+                </div>
+            </div>
+            
+            <div class="options-section">
+                <div class="option-group">
+                    <label for="slideCount">Number of Slides:</label>
+                    <select id="slideCount">
+                        <option value="2">2 slides</option>
+                        <option value="3">3 slides</option>
+                        <option value="4" selected>4 slides</option>
+                        <option value="5">5 slides</option>
+                        <option value="6">6 slides</option>
+                        <option value="7">7 slides</option>
+                        <option value="8">8 slides</option>
+                    </select>
+                </div>
+                
+                <div class="option-group">
+                    <label for="gapWidth">Gap Width (px):</label>
+                    <input type="number" id="gapWidth" value="12" min="0" max="50">
+                    <p>LinkedIn's default gap is approximately 12px, but you may adjust based on your needs.</p>
+                </div>
+            </div>
+            
+            <button id="processButton">Process Image</button>
+            
+            <div class="result-section hidden" id="resultSection">
+                <h2>Your Sliced Images</h2>
+                <p>Ready to download for LinkedIn carousel posts</p>
+                <div class="canvas-container" id="resultContainer"></div>
+                <div class="download-buttons">
+                    <button id="downloadPdfButton" class="download-pdf">Download As PDF</button>
+                    <button id="downloadImagesButton" class="download-images">Download Individual Images</button>
+                </div>
             </div>
         </div>
         
-        <button id="processButton">Process Image</button>
-        
-        <div class="result-section hidden" id="resultSection">
-            <h2>Your Sliced Images</h2>
-            <p>Ready to download for LinkedIn carousel posts</p>
-            <div class="canvas-container" id="resultContainer"></div>
-            <div class="download-buttons">
-                <button id="downloadPdfButton" class="download-pdf">Download As PDF</button>
-                <button id="downloadImagesButton" class="download-images">Download Individual Images</button>
+        <div id="text-formatter" class="tab-content locked-feature">
+            <div class="locked-overlay">
+                <h3>Premium Feature</h3>
+                <p>Buy me a coffee (£3) to unlock this tool</p>
+                <button id="unlockTextFormatter" class="buy-coffee-btn">Buy me a coffee</button>
+            </div>
+            
+            <div class="info-text">
+                <p>Format your text for LinkedIn posts with special characters, spacing, and more.</p>
+            </div>
+            
+            <div class="text-formatter">
+                <textarea id="formatterInput" placeholder="Type or paste your LinkedIn post here..."></textarea>
+                
+                <div class="format-options">
+                    <button class="format-btn" data-format="bold">Bold</button>
+                    <button class="format-btn" data-format="italic">Italic</button>
+                    <button class="format-btn" data-format="bullet">• Bullets</button>
+                    <button class="format-btn" data-format="arrow">→ Arrows</button>
+                    <button class="format-btn" data-format="checkbox">☑ Checkbox</button>
+                    <button class="format-btn" data-format="divider">——— Divider</button>
+                    <button class="format-btn" data-format="star">★ Star</button>
+                    <button class="format-btn" data-format="quote">𝗤𝘂𝗼𝘁𝗲</button>
+                    <button class="format-btn" data-format="clear">Clear All</button>
+                </div>
+                
+                <div class="character-count">
+                    Characters: <span id="charCount">0</span>/3000
+                </div>
             </div>
         </div>
     </div>
@@ -217,6 +387,77 @@
         const downloadPdfButton = document.getElementById('downloadPdfButton');
         const downloadImagesButton = document.getElementById('downloadImagesButton');
         const errorMessage = document.getElementById('errorMessage');
+        const removeWatermarkCheckbox = document.getElementById('removeWatermark');
+        const buyCoffeeBtn = document.getElementById('buyCoffeeBtn');
+        const unlockTextFormatterBtn = document.getElementById('unlockTextFormatter');
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Only allow tab switch if not locked or if premium
+                const targetTab = tab.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetTab);
+                
+                if (targetContent.classList.contains('locked-feature') && !isPremiumUser()) {
+                    // Don't switch to locked tabs for non-premium users
+                    return;
+                }
+                
+                // Switch tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                targetContent.classList.add('active');
+            });
+        });
+        
+        // Premium functionality
+        function isPremiumUser() {
+            return localStorage.getItem('imageninja_premium') === 'true';
+        }
+        
+        function unlockPremiumFeatures() {
+            // Enable watermark removal
+            removeWatermarkCheckbox.disabled = false;
+            
+            // Unlock text formatter
+            const textFormatter = document.getElementById('text-formatter');
+            textFormatter.classList.remove('locked-feature');
+            const lockedOverlay = textFormatter.querySelector('.locked-overlay');
+            if (lockedOverlay) {
+                lockedOverlay.remove();
+            }
+            
+            // Hide premium banner
+            document.querySelector('.premium-banner').style.display = 'none';
+            
+            // Save premium status
+            localStorage.setItem('imageninja_premium', 'true');
+        }
+        
+        // Check premium status on load
+        if (isPremiumUser()) {
+            unlockPremiumFeatures();
+        }
+        
+        // Handle buy coffee button clicks
+        buyCoffeeBtn.addEventListener('click', handlePayment);
+        unlockTextFormatterBtn.addEventListener('click', handlePayment);
+        
+        function handlePayment() {
+            // In a real app, you would integrate with a payment processor here
+            const confirmPurchase = confirm("Would you like to support the developer by buying a coffee for £3?\n\nThis will unlock premium features:\n- Watermark removal\n- LinkedIn Text Formatter tool");
+            
+            if (confirmPurchase) {
+                // Simulate successful payment
+                unlockPremiumFeatures();
+                alert("Thank you for your support! Premium features are now unlocked.");
+            }
+        }
         
         // Global variables
         let originalImage = null;
@@ -268,6 +509,7 @@
             // Get options
             const slideCount = parseInt(slideCountSelect.value);
             const gapWidth = parseInt(gapWidthInput.value);
+            const shouldAddWatermark = !removeWatermarkCheckbox.checked || !isPremiumUser();
             
             // Calculate dimensions
             const totalWidth = originalImage.width;
@@ -297,6 +539,11 @@
                     0, 0, slideWidth, height         // Destination coordinates
                 );
                 
+                // Add watermark if not premium or watermark removal not checked
+                if (shouldAddWatermark) {
+                    addWatermark(ctx, slideWidth, height);
+                }
+                
                 // Store canvas
                 canvases.push(canvas);
                 
@@ -305,6 +552,20 @@
             }
             
             resultSection.classList.remove('hidden');
+        }
+        
+        // Add watermark to canvas
+        function addWatermark(ctx, width, height) {
+            // Semi-transparent watermark
+            ctx.save();
+            ctx.font = "12px Poppins";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.3)"; // Very subtle watermark
+            
+            // Position at bottom right
+            const text = "Split by funk3000";
+            const textWidth = ctx.measureText(text).width;
+            ctx.fillText(text, width - textWidth - 10, height - 10);
+            ctx.restore();
         }
         
         // Download all slides as PDF
@@ -382,6 +643,81 @@
         function hideError() {
             errorMessage.classList.add('hidden');
         }
+        
+        // Text Formatter Tool Functionality
+        const formatterInput = document.getElementById('formatterInput');
+        const charCount = document.getElementById('charCount');
+        const formatButtons = document.querySelectorAll('.format-btn');
+        
+        // Update character count
+        formatterInput.addEventListener('input', () => {
+            const count = formatterInput.value.length;
+            charCount.textContent = count;
+            
+            // Change color if over limit
+            if (count > 3000) {
+                charCount.style.color = 'red';
+            } else {
+                charCount.style.color = '';
+            }
+        });
+        
+        // Formatting options
+        formatButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const format = btn.getAttribute('data-format');
+                const textarea = formatterInput;
+                const startPos = textarea.selectionStart;
+                const endPos = textarea.selectionEnd;
+                const selectedText = textarea.value.substring(startPos, endPos);
+                
+                let formattedText = '';
+                
+                switch(format) {
+                    case 'bold':
+                        formattedText = `𝗕𝗢𝗟𝗗: ${selectedText}`;
+                        break;
+                    case 'italic':
+                        formattedText = `𝘐𝘵𝘢𝘭𝘪𝘤: ${selectedText}`;
+                        break;
+                    case 'bullet':
+                        formattedText = '• ' + selectedText.split('\n').join('\n• ');
+                        break;
+                    case 'arrow':
+                        formattedText = '→ ' + selectedText;
+                        break;
+                    case 'checkbox':
+                        formattedText = '☑ ' + selectedText;
+                        break;
+                    case 'divider':
+                        formattedText = '\n———————————\n';
+                        break;
+                    case 'star':
+                        formattedText = '★ ' + selectedText;
+                        break;
+                    case 'quote':
+                        formattedText = '𝗤𝘂𝗼𝘁𝗲: "' + selectedText + '"';
+                        break;
+                    case 'clear':
+                        textarea.value = '';
+                        textarea.dispatchEvent(new Event('input'));
+                        return;
+                }
+                
+                // Replace selected text with formatted text
+                textarea.value = textarea.value.substring(0, startPos) + formattedText + textarea.value.substring(endPos);
+                
+                // Update character count
+                textarea.dispatchEvent(new Event('input'));
+                
+                // Set selection to after the inserted text
+                textarea.selectionStart = startPos + formattedText.length;
+                textarea.selectionEnd = startPos + formattedText.length;
+                
+                // Focus back on textarea
+                textarea.focus();
+            });
+        });
     </script>
 </body>
 </html>
