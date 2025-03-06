@@ -325,15 +325,25 @@
             from { opacity: 0; transform: translate(-50%, -60%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
+
+        .funk-logo {
+            width: 200px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="powered-by" style="text-align: center; margin-bottom: 20px;">
-            <img src="https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w" alt="Funk3000 Logo" style="height: 40px; margin-right: 10px;">
-            <span style="font-weight: 600; color: #333; vertical-align: middle;">Powered by Funk3000</span>
-        </div>
+        <img src="https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w" 
+             alt="Funk3000 Logo" 
+             class="funk-logo">
 
+        <h1>Image Ninja</h1>
+        
         <div class="tools-tabs">
             <div class="tab active" data-tab="carousel-slicer">Carousel Slicer</div>
             <div class="tab" data-tab="text-formatter">LinkedIn Text Formatter</div>
@@ -348,22 +358,6 @@
                 <label for="imageInput">Upload Your Image:</label>
                 <input type="file" id="imageInput" accept="image/*">
                 <div id="errorMessage" class="error hidden"></div>
-                
-                <div class="watermark-toggle">
-                    <input type="checkbox" id="removeWatermark" disabled>
-                    <label for="removeWatermark">Remove watermark</label>
-                    <button id="buyCoffeeBtn" class="buy-coffee-btn">🔓 Unlock Premium (£3)</button>
-                </div>
-                
-                <div class="premium-banner">
-                    <strong>✨ Unlock Premium Features:</strong>
-                    <ul>
-                        <li>Remove "Split by funk3000" watermark</li>
-                        <li>Access the LinkedIn Text Formatter tool</li>
-                        <li>Support independent development</li>
-                    </ul>
-                    <button id="premiumBannerBtn" class="buy-coffee-btn">🔓 Unlock Premium for £3</button>
-                </div>
             </div>
             
             <div class="options-section">
@@ -379,15 +373,25 @@
                         <option value="8">8 slides</option>
                     </select>
                 </div>
-                
-                <div class="option-group">
-                    <label for="gapWidth">Gap Width (px):</label>
-                    <input type="number" id="gapWidth" value="12" min="0" max="50">
-                    <p>LinkedIn's default gap is approximately 12px, but you may adjust based on your needs.</p>
-                </div>
             </div>
             
             <button id="processButton">Process Image</button>
+
+            <div class="watermark-toggle">
+                <input type="checkbox" id="removeWatermark" disabled>
+                <label for="removeWatermark">Remove watermark</label>
+                <button id="buyCoffeeBtn" class="buy-coffee-btn">🔓 Unlock Premium (£3)</button>
+            </div>
+            
+            <div class="premium-banner">
+                <strong>✨ Unlock Premium Features:</strong>
+                <ul>
+                    <li>Remove "Split by funk3000" watermark</li>
+                    <li>Access the LinkedIn Text Formatter tool</li>
+                    <li>Support independent development</li>
+                </ul>
+                <button id="premiumBannerBtn" class="buy-coffee-btn">🔓 Unlock Premium for £3</button>
+            </div>
             
             <div class="result-section hidden" id="resultSection">
                 <h2>Your Sliced Images</h2>
@@ -431,13 +435,14 @@
                 </div>
             </div>
         </div>
-    </div>     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         // Get DOM elements
         const imageInput = document.getElementById('imageInput');
         const slideCountSelect = document.getElementById('slideCount');
-        const gapWidthInput = document.getElementById('gapWidth');
         const processButton = document.getElementById('processButton');
         const resultSection = document.getElementById('resultSection');
         const resultContainer = document.getElementById('resultContainer');
@@ -570,7 +575,6 @@
             }
             
             const slideCount = parseInt(slideCountSelect.value);
-            const gapWidth = parseInt(gapWidthInput.value);
             const shouldAddWatermark = !removeWatermarkCheckbox.checked || !isPremiumUser();
             
             const totalWidth = originalImage.width;
@@ -586,7 +590,7 @@
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 
-                const sourceX = i * slideWidth + (i > 0 ? i * gapWidth : 0);
+                const sourceX = i * slideWidth;
                 
                 ctx.drawImage(
                     originalImage,
