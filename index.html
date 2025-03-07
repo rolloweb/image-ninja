@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Ninja</title>
+    <title>Image Ninja by Funk3000</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: white;
             border-radius: 12px;
@@ -29,26 +29,23 @@
             overflow: hidden;
         }
 
-        .funk-logo {
-            width: 180px;
-            height: auto;
-            margin: 20px auto;
-            display: block;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
-            transition: transform 0.3s ease;
-        }
-
-        .funk-logo:hover {
-            transform: scale(1.05);
-        }
-
-        h1 {
-            color: #699fcd;
+        .header {
             text-align: center;
-            font-weight: 700;
-            margin: 20px 0;
-            font-size: 2em;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 10px 0;
+            font-size: 2.2em;
+        }
+
+        .header img {
+            height: 40px;
+            width: auto;
+            margin: 10px 0;
         }
 
         .tools-tabs {
@@ -79,7 +76,6 @@
 
         .tab-content {
             display: none;
-            min-height: 400px;
             padding: 20px;
             background-color: white;
         }
@@ -89,33 +85,31 @@
             animation: fadeIn 0.3s ease-out;
         }
 
-        .info-text {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 8px;
+        .controls-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
             margin-bottom: 20px;
-            border-left: 4px solid #df7c6c;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
         }
 
-        .input-section {
-            margin-bottom: 20px;
+        .slides-control {
+            flex: 1;
         }
 
         .preview-section {
-            display: flex;
-            gap: 20px;
             margin: 20px 0;
             background-color: #f5f5f5;
             padding: 20px;
             border-radius: 8px;
-        }
-
-        .preview-controls {
-            flex: 0 0 200px;
+            overflow: hidden;
         }
 
         .preview-display {
-            flex: 1;
+            width: 100%;
             overflow-x: auto;
             white-space: nowrap;
             background: white;
@@ -125,13 +119,11 @@
         }
 
         .preview-display canvas {
+            height: 200px;
+            width: auto;
             margin-right: 10px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        input[type="file"] {
-            display: none;
         }
 
         .upload-label {
@@ -156,14 +148,8 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
-            margin-bottom: 15px;
             background-color: white;
             cursor: pointer;
-        }
-
-        .support-dev {
-            text-align: center;
-            margin: 20px 0;
         }
 
         .buy-coffee-btn {
@@ -175,7 +161,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            width: 100%;
+            min-width: 200px;
         }
 
         .buy-coffee-btn small {
@@ -233,12 +219,6 @@
             animation: fadeIn 0.3s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Text Formatter Styles */
         .text-formatter {
             background-color: #f5f5f5;
             padding: 20px;
@@ -304,13 +284,32 @@
             z-index: 10;
             backdrop-filter: blur(4px);
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-text {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #df7c6c;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w" 
-             alt="Funk3000 Logo" 
-             class="funk-logo">
+        <div class="header">
+            <h1>Carousel Slicer</h1>
+            <img src="https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w" 
+                 alt="Made by Funk3000">
+        </div>
 
         <div class="tools-tabs">
             <div class="tab active" data-tab="carousel-slicer">Carousel Slicer</div>
@@ -328,8 +327,8 @@
                 <div id="errorMessage" class="error"></div>
             </div>
 
-            <div class="preview-section" id="previewSection" style="display: none;">
-                <div class="preview-controls">
+            <div class="controls-section">
+                <div class="slides-control">
                     <label for="slideCount">Number of Slides:</label>
                     <select id="slideCount">
                         <option value="2">2 slides</option>
@@ -340,15 +339,15 @@
                         <option value="7">7 slides</option>
                         <option value="8">8 slides</option>
                     </select>
-
-                    <div class="support-dev">
-                        <button id="buyCoffeeBtn" class="buy-coffee-btn">
-                            ☕️ Buy dev a coffee
-                            <small>Remove watermark</small>
-                        </button>
-                    </div>
                 </div>
 
+                <button id="buyCoffeeBtn" class="buy-coffee-btn">
+                    ☕️ Buy dev a coffee (£2)
+                    <small>Remove watermark & unlock text formatter</small>
+                </button>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display: none;">
                 <div class="preview-display" id="previewDisplay"></div>
             </div>
 
@@ -361,7 +360,7 @@
         <div id="text-formatter" class="tab-content locked-feature">
             <div class="locked-overlay">
                 <h3>Premium Feature</h3>
-                <p>Buy dev a coffee to unlock this tool</p>
+                <p>Buy dev a coffee (£2) to unlock this tool</p>
                 <button id="unlockTextFormatter" class="buy-coffee-btn">☕️ Buy a Coffee</button>
             </div>
             
@@ -392,7 +391,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <script>
         // DOM Elements
         const imageInput = document.getElementById('imageInput');
@@ -407,6 +405,18 @@
 
         // Global variables
         let originalImage = null;
+        let logoImage = null;
+
+        // Load Funk3000 logo for watermark
+        function loadLogo() {
+            logoImage = new Image();
+            logoImage.src = 'https://images.squarespace-cdn.com/content/v1/66211ba2d996b1316ff8daec/87b35222-b121-4e7e-976d-81260c00d04a/funk3000_logo.png?format=500w';
+            return new Promise((resolve, reject) => {
+                logoImage.onload = resolve;
+                logoImage.onerror = reject;
+            });
+        }
+        loadLogo();
 
         // Tab functionality
         const tabs = document.querySelectorAll('.tab');
@@ -462,7 +472,7 @@
                 "✓ One-time payment, lifetime access"
             ];
             
-            const confirmMessage = `☕️ Buy Dev a Coffee (£3)\n\n${features.join('\n')}\n\nWould you like to proceed?`;
+            const confirmMessage = `☕️ Buy Dev a Coffee (£2)\n\n${features.join('\n')}\n\nWould you like to proceed?`;
             
             if (confirm(confirmMessage)) {
                 unlockPremiumFeatures();
@@ -503,7 +513,7 @@
                         showError("Image dimensions are too small. Minimum recommended size is 400x400 pixels.");
                         return;
                     }
-                    previewSection.style.display = 'flex';
+                    previewSection.style.display = 'block';
                     updatePreview();
                 };
                 originalImage.src = event.target.result;
@@ -521,11 +531,18 @@
             const slideWidth = Math.floor(totalWidth / slideCount);
             const height = originalImage.height;
             
+            // Calculate scale to fit preview
+            const maxHeight = 200; // Max preview height
+            const scale = Math.min(1, maxHeight / height);
+            
             for (let i = 0; i < slideCount; i++) {
                 const canvas = document.createElement('canvas');
-                canvas.width = slideWidth;
-                canvas.height = height;
+                canvas.width = slideWidth * scale;
+                canvas.height = height * scale;
                 const ctx = canvas.getContext('2d');
+                
+                // Scale context for preview
+                ctx.scale(scale, scale);
                 
                 const sourceX = i * slideWidth;
                 ctx.drawImage(
@@ -543,25 +560,26 @@
         }
         
         function addWatermark(ctx, width, height) {
+            if (!logoImage) return;
+            
             ctx.save();
             
-            const text = "Split by funk3000";
-            ctx.font = "bold 16px Poppins";
-            const textWidth = ctx.measureText(text).width;
+            // Logo watermark
+            const logoSize = Math.min(width * 0.2, height * 0.2); // 20% of smallest dimension
             const padding = 10;
             
-            // Background
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-            ctx.fillRect(
-                width - textWidth - (padding * 2), 
-                height - 30, 
-                textWidth + (padding * 2), 
-                30
+            // Set transparency
+            ctx.globalAlpha = 0.6;
+            
+            // Draw logo in bottom right corner
+            ctx.drawImage(
+                logoImage,
+                width - logoSize - padding,
+                height - logoSize - padding,
+                logoSize,
+                logoSize
             );
             
-            // Text
-            ctx.fillStyle = "#df7c6c";
-            ctx.fillText(text, width - textWidth - padding, height - 10);
             ctx.restore();
         }
         
@@ -572,21 +590,42 @@
             }
             
             try {
-                const canvases = document.querySelectorAll('#previewDisplay canvas');
+                const slideCount = parseInt(slideCountSelect.value);
+                const totalWidth = originalImage.width;
+                const slideWidth = Math.floor(totalWidth / slideCount);
+                const height = originalImage.height;
+                
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
-                    orientation: canvases[0].width > canvases[0].height ? 'landscape' : 'portrait',
+                    orientation: slideWidth > height ? 'landscape' : 'portrait',
                     unit: 'px',
-                    format: [canvases[0].width, canvases[0].height]
+                    format: [slideWidth, height]
                 });
                 
-                Array.from(canvases).forEach((canvas, index) => {
-                    if (index > 0) {
-                        pdf.addPage([canvas.width, canvas.height]);
+                for (let i = 0; i < slideCount; i++) {
+                    if (i > 0) {
+                        pdf.addPage([slideWidth, height]);
                     }
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = slideWidth;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    const sourceX = i * slideWidth;
+                    ctx.drawImage(
+                        originalImage,
+                        sourceX, 0, slideWidth, height,
+                        0, 0, slideWidth, height
+                    );
+                    
+                    if (!isPremiumUser()) {
+                        addWatermark(ctx, slideWidth, height);
+                    }
+                    
                     const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                    pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
-                });
+                    pdf.addImage(imgData, 'JPEG', 0, 0, slideWidth, height);
+                }
                 
                 pdf.save('linkedin-carousel.pdf');
             } catch (error) {
@@ -602,17 +641,37 @@
             }
             
             try {
-                const canvases = document.querySelectorAll('#previewDisplay canvas');
-                canvases.forEach((canvas, index) => {
+                const slideCount = parseInt(slideCountSelect.value);
+                const totalWidth = originalImage.width;
+                const slideWidth = Math.floor(totalWidth / slideCount);
+                const height = originalImage.height;
+                
+                for (let i = 0; i < slideCount; i++) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = slideWidth;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    const sourceX = i * slideWidth;
+                    ctx.drawImage(
+                        originalImage,
+                        sourceX, 0, slideWidth, height,
+                        0, 0, slideWidth, height
+                    );
+                    
+                    if (!isPremiumUser()) {
+                        addWatermark(ctx, slideWidth, height);
+                    }
+                    
                     setTimeout(() => {
                         const link = document.createElement('a');
-                        link.download = `carousel-slide-${index + 1}.png`;
+                        link.download = `carousel-slide-${i + 1}.png`;
                         link.href = canvas.toDataURL('image/png');
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                    }, index * 200);
-                });
+                    }, i * 200);
+                }
             } catch (error) {
                 console.error("Image download error:", error);
                 showError("Failed to download images. Error: " + error.message);
